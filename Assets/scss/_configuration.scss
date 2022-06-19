@@ -1,0 +1,15 @@
+@charset 'UTF-8';
+
+html {
+	font-size: 62.5%;
+}
+
+@mixin flex {
+	display: -webkit-flex;
+	display:    -moz-flex;
+	display:     -ms-flex;
+	display:      -o-flex;
+	display:         flex;
+}
+
+$red_ff0: #ff0000;
