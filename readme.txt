@@ -3,7 +3,7 @@ Contributors: Samurai6111
 Tags: wpdb, sql, data, database, db
 Requires at least: 4.9
 Tested up to: 6.0
-Stable tag: 2.6
+Stable tag: 2.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.0
@@ -78,4 +78,7 @@ OR…
 ・fix directory structure
 
 2022/06/15 2.6
+・fix directory structure
+
+2022/06/19 2.7
 ・fix directory structure
