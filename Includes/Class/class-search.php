@@ -5,15 +5,15 @@ class Mywpdb_Search {
 		$this->s = mywpdb_s_GET('s');
 	}
 
-
 /**
 * 検索結果一覧出力
 */
-	function search_results() {
+	function search_results($output = '') {
 
 		global $wpdb;
 
 		if ($this->s) {
+
 			$Mywpdb_Get_Table = new Mywpdb_Get_Table();
 			$search_tables = $Mywpdb_Get_Table->search_tables();
 			$search_results = [];
@@ -42,7 +42,12 @@ class Mywpdb_Search {
 			$search_results[$search_table]= $wpdb->get_results($search_sql, ARRAY_A);
 			}
 
-			return $search_results;
+			if ($output === 'sql') {
+				return $search_sql;
+			} else {
+				return $search_results;
+			}
+
 		} else {
 			return false;
 		}

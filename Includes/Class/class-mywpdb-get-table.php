@@ -7,34 +7,31 @@ class Mywpdb_Get_Table {
 	}
 
 	/**
-	 * テーブル名に接頭語をつける
-	 *
-	 * @param $table テーブル名
-	 */
-	function add_table_prefix($table) {
-		global $wpdb;
-		return $wpdb->prefix . $table;
-	}
-
-	/**
 	 * 全テーブル取得
 	 */
-	function tables() {
+	function tables($output = '') {
 		global $wpdb;
-		$tables = array_map([$this, 'add_table_prefix'], $wpdb->tables);
-		asort($tables);
-		return $tables;
+		$sql = $wpdb->prepare('SHOW TABLES');
+		if ($output === 'sql') {
+			return $sql;
+		} else {
+			$show_tables = $wpdb->get_results(
+				$sql
+			);
+			$key = array_key_first((array)$show_tables[0]);
+			$tables = array_column($show_tables, $key);
+			asort($tables);
+			return $tables;
+		}
 	}
+
 
 	/**
 	 * テーブルのカラム名
 	 */
 	function table_column_names($table_name) {
 		global $wpdb;
-		return $wpdb->get_col(
-			$wpdb->prepare("DESC {$table_name}", '*'),
-			0
-		);
+		return $wpdb->get_col("DESC {$table_name}");
 	}
 
 	/**
@@ -43,45 +40,63 @@ class Mywpdb_Get_Table {
 	function table_column_values_max() {
 		global $wpdb, $limit;
 		$table_name = mywpdb_s_GET('table_name');
+		$sql = "SELECT * FROM $table_name";
 		$table_column_values_max = $wpdb->get_results(
-			$wpdb->prepare("SELECT * FROM $table_name $table_name"),
+			$sql,
 			ARRAY_A
 		);
+
 		return count($table_column_values_max);
 	}
 
 	/**
 	 * テーブルのs全てのカラムの値
 	 */
-	function table_column_values($table_name_arg = '') {
+	function table_column_values($output = '', $table_name_arg = '') {
 		global $wpdb, $limit;
 		$table_name = ($table_name_arg) ? $table_name_arg : mywpdb_s_GET('table_name');
-		$table_column_values = $wpdb->get_results(
-			"SELECT * FROM $table_name LIMIT $this->limit OFFSET $this->offset",
-			ARRAY_A
+		$sql = $wpdb->prepare(
+			"SELECT * FROM $table_name LIMIT %d OFFSET %d",
+			$this->limit,
+			$this->offset
 		);
 
-		return $table_column_values;
+		if ($output === 'sql') {
+			return $sql;
+		} else {
+			$table_column_values = $wpdb->get_results(
+				$sql,
+				ARRAY_A
+			);
+
+			return $table_column_values;
+		}
 	}
 
 	/**
 	 * テーブルの1カラムの値
 	 */
-	function table_row_values() {
+	function table_row_values($output = '') {
 		global $wpdb, $limit;
 		$table_name = mywpdb_s_GET('table_name');
 		$where_key = array_key_first(mywpdb_s_GET('where'));
 		$where_value = mywpdb_s_GET('where')[$where_key];
-
-		$table_row_values = $wpdb->get_row(
-			$wpdb->prepare(
-				'SELECT * FROM `' . $table_name . '` WHERE ' .  $where_key . ' = '  . '%s ',
-				$where_value,
-			),
-			ARRAY_A
+		$sql = $wpdb->prepare(
+			"SELECT * FROM {$table_name} WHERE $where_key = %d",
+			$where_value,
 		);
 
-		return $table_row_values;
+		if ($output === 'sql') {
+			return $sql;
+		} else {
+
+			$table_row_values = $wpdb->get_row(
+				$sql,
+				ARRAY_A
+			);
+
+			return $table_row_values;
+		}
 	}
 
 
@@ -93,4 +108,3 @@ class Mywpdb_Get_Table {
 		return $search_tables;
 	}
 }
-?>

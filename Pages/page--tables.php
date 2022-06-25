@@ -2,6 +2,10 @@
 $Mywpdb_Get_Table = new Mywpdb_Get_Table();
 ?>
 <h1>テーブル一覧</h1>
+<br>
+
+<?php mywpdb_sql($Mywpdb_Get_Table->tables('sql')) ?>
+<br><br>
 
 <form class="mywpdb__form"
 			method="GET">

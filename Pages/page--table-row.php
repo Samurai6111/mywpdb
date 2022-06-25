@@ -8,6 +8,9 @@ $Mywpdb_Update = new Mywpdb_Update();
 <h1><?php mywpdb_breadcrumb() ?></h1>
 <br>
 
+<?php mywpdb_sql($Mywpdb_Get_Table->table_row_values('sql')) ?>
+<br><br>
+
 <form method="POST">
 	<?php wp_nonce_field('mywpdb_update_row', 'mywpdb_nonce_field'); ?>
 

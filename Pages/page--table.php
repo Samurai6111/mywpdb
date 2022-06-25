@@ -5,9 +5,15 @@ $table_column_names = $mywpdb_get_able->table_column_names(mywpdb_s_GET('table_n
 $table_column_values = $mywpdb_get_able->table_column_values();
 $max = $mywpdb_get_able->table_column_values_max();
 
+
 ?>
 
 <h1><?php mywpdb_breadcrumb() ?></h1>
+<br>
+
+<?php mywpdb_sql($mywpdb_get_able->table_column_values('sql')) ?>
+<br><br>
+
 <table class="mywpdbTable">
 	<tr class="mywpdbTable__tr">
 		<th class="mywpdbTable__head">action</th>

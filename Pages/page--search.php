@@ -3,10 +3,22 @@ $Mywpdb_Get_Table = new Mywpdb_Get_Table();
 $Mywpdb_Search = new Mywpdb_Search();
 $search_results = $Mywpdb_Search->search_results();
 $s = $Mywpdb_Search->s;
+
+
 ?>
 
+<br>
+<a href="<?php echo esc_url(admin_url() . "?page=mywpdb_page") ?>">テーブル一覧へ戻る</a>
+<br>
+
 <h1>検索結果ページ</h1>
+
 <h2>検索キーワード : <?php echo esc_html($s) ?></h2>
+<br>
+
+<?php mywpdb_sql($Mywpdb_Search->search_results('sql')) ?>
+<br>
+
 <?php
 if (!empty($search_results)) {
 	foreach ($search_results as $search_table => $table_column_values) {

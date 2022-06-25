@@ -263,3 +263,10 @@ function mywpdb_const_input() {
 			 value="mywpdb_page">
 <?php
 }
+
+
+function mywpdb_sql($sql) {
+	?>
+	<code >SQL : <?php echo esc_html( $sql ); ?></code>
+	<?php
+}
