@@ -8,7 +8,7 @@ Text Domain: my_plugin
 Description: Wordpressで管理画面からDBを編集することが出来るプラグイン
 Author: Shota Kawakatsu
 Author URI: https://github.com/Samurai6111
-Version: 2.7
+Version: 3.1.3
 Plugin URI: https://github.com/Samurai6111/mywpdb
 */
 
