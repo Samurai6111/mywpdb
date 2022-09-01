@@ -6,6 +6,7 @@ $table_column_values = $mywpdb_get_able->table_column_values();
 $max = $mywpdb_get_able->table_column_values_max();
 
 
+
 ?>
 
 <h1><?php mywpdb_breadcrumb() ?></h1>

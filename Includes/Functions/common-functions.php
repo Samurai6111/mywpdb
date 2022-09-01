@@ -172,10 +172,14 @@ function mywpdb_breadcrumb() {
  * @param $page_count ページの数
  */
 function mywpdb_pagination($max) {
-	$paged = ceil($max / 25);
+
+	$data_per_page = 25;
+	$paged = ceil($max / $data_per_page);
+
 	$offset = (int) mywpdb_s_GET('offset');
-	$offset_prev = ($offset === 0) ? 0 : $offset - 1;
-	$offset_next = ($offset === $paged) ? $offset + 1 : $paged;
+	$offset_prev = ($offset === 0) ? 0 : $offset - $data_per_page;
+	$offset_next = $offset + $data_per_page;
+	$offset_last = ($paged - 1) * $data_per_page;
 
 	if ($paged == 0) {
 		return false;
@@ -204,12 +208,13 @@ function mywpdb_pagination($max) {
 		<?php
 			$b = 0;
 			for ($i = 1; $i <= $paged; $i++) {
-				$current = ($offset == $i) ? '-current' : '';
+				$pagination_offset = $data_per_page * ($i - 1);
+				$current = ($offset == $pagination_offset) ? '-current' : '';
 			?>
 		<li class="mywpdbPagination__item <?php echo esc_attr($current) ?>">
 			<button class="mywpdbPagination__itemButton"
 							name="offset"
-							value="<?php echo esc_attr($i) ?>">
+							value="<?php echo esc_attr($pagination_offset) ?>">
 				<?php echo esc_html($i) ?>
 			</button>
 		</li>
@@ -225,7 +230,7 @@ function mywpdb_pagination($max) {
 
 	<button class="mywpdbPagination__lastButton"
 					name="offset"
-					value="<?php echo esc_attr($paged) ?>">
+					value="<?php echo esc_attr($offset_last) ?>">
 		<?php echo esc_html('>>') ?>
 	</button>
 </form>
