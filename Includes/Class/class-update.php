@@ -32,7 +32,7 @@ class Mywpdb_Update {
 					foreach ($_POST as $key => $value) {
 						if (!is_array($value)) {
 							$value = wp_kses_post($value);
-							$$sanitized_POST[$key] = $value;
+							$sanitized_POST[$key] = $value;
 						}
 					}
 				}
@@ -50,7 +50,7 @@ class Mywpdb_Update {
 				// whereを定義
 				//--------------------------------------------------
 				$first_key = array_key_first($wpdb_update_array);
-				$first_value = esc_html($wpdb_update_array[$first_key]);
+				$first_value = $wpdb_update_array[$first_key];
 
 				//--------------------------------------------------
 				// 変更処理を実行
